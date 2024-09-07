@@ -1,7 +1,6 @@
 import { IconButton } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-
 import { useRecoilState } from "recoil";
 import { userRoleState } from "@/store/atom";
 

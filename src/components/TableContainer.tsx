@@ -23,15 +23,14 @@ import {
   modalStateDefaultValue,
   userRoleState
 } from "@/store/atom";
-
-import { Updated_Inventory_State } from "@/types";
+import { UpdatedInventoryStateInterface } from "@/types";
 import useInverntoryUpdate from "@/hook/useInverntoryUpdate";
 const CustomTableContainer = () => {
   const [open, setOpen] = useState(false);
   const [inventory] = useRecoilState(inventoryState);
   const [_, updateModalState] = useRecoilState(modalState);
 
-  const handleModalTrigger = (data: Updated_Inventory_State) => {
+  const handleModalTrigger = (data: UpdatedInventoryStateInterface) => {
     updateModalState(data);
     setOpen((prev) => !prev);
   };
@@ -90,18 +89,18 @@ export default CustomTableContainer;
 const TableRowMap = ({
   handleModalTrigger
 }: {
-  handleModalTrigger: (e: Updated_Inventory_State) => void;
+  handleModalTrigger: (e: UpdatedInventoryStateInterface) => void;
 }) => {
   const [inventory] = useRecoilState(inventoryState);
   const [role] = useRecoilState(userRoleState);
   const updateInventory = useInverntoryUpdate();
 
-  const handleDeleteRow = (data: Updated_Inventory_State) => {
+  const handleDeleteRow = (data: UpdatedInventoryStateInterface) => {
     const updatedData = { ...data, isDeleted: true };
     updateInventory(updatedData);
   };
 
-  const handleDisableRow = (data: Updated_Inventory_State) => {
+  const handleDisableRow = (data: UpdatedInventoryStateInterface) => {
     const updatedData = { ...data, isActive: !data.isActive };
     updateInventory(updatedData);
   };
@@ -117,13 +116,13 @@ const TableRowMap = ({
               {item.category}
             </TableCell>
             <TableCell component="th" align="center">
-              {item.price}
+              $ {item.price}
             </TableCell>
             <TableCell component="th" align="center">
               {item.quantity}
             </TableCell>
             <TableCell component="th" align="center">
-              {item.value}
+              $ {item.value}
             </TableCell>
             <TableCell component="th" align="center">
               <IconButton

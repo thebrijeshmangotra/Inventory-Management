@@ -1,4 +1,4 @@
-import { Updated_Inventory_State } from "@/types";
+import { UpdatedInventoryStateInterface } from "@/types";
 import { atom, RecoilState } from "recoil";
 
 export const userRoleState = atom({
@@ -6,15 +6,14 @@ export const userRoleState = atom({
   default: "admin"
 });
 
-export const inventoryState: RecoilState<Updated_Inventory_State[]> = atom<
-  Updated_Inventory_State[]
->({
-  key: "inventoryState",
-  default: []
-});
+export const inventoryState: RecoilState<UpdatedInventoryStateInterface[]> =
+  atom<UpdatedInventoryStateInterface[]>({
+    key: "inventoryState",
+    default: []
+  });
 
-export const modalState: RecoilState<Updated_Inventory_State> =
-  atom<Updated_Inventory_State>({
+export const modalState: RecoilState<UpdatedInventoryStateInterface> =
+  atom<UpdatedInventoryStateInterface>({
     key: "modalState",
     default: {
       name: "",

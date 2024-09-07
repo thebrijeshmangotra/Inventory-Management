@@ -1,4 +1,4 @@
-export interface Inventory_State {
+export interface InventoryStateInterface {
   name: string;
   category: string;
   price: string;
@@ -6,7 +6,7 @@ export interface Inventory_State {
   value: string;
 }
 
-export interface Updated_Inventory_State {
+export interface UpdatedInventoryStateInterface {
   id: string;
   name: string;
   category: string;

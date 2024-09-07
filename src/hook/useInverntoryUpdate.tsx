@@ -1,12 +1,12 @@
 import { inventoryState } from "@/store/atom";
-import { Updated_Inventory_State } from "@/types";
+import { UpdatedInventoryStateInterface } from "@/types";
 import { useRecoilState } from "recoil";
 
 const useInverntoryUpdate = () => {
   const [inventory, updatedInventoryState] = useRecoilState(inventoryState);
 
   const updateInventory = (
-    data: Updated_Inventory_State,
+    data: UpdatedInventoryStateInterface,
     afterUpdate?: () => void
   ) => {
     const InventroyCopy = [...inventory];

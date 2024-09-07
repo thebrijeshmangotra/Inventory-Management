@@ -8,7 +8,7 @@ import Topbar from "@/components/Topbar";
 import CustomTableContainer from "@/components/TableContainer";
 import { useRecoilState } from "recoil";
 import { inventoryState } from "@/store/atom";
-import { Inventory_State } from "@/types";
+import { InventoryStateInterface } from "@/types";
 
 export default function Home() {
   const [_, updateInventory] = useRecoilState(inventoryState);
@@ -20,14 +20,19 @@ export default function Home() {
           "https://dev-0tf0hinghgjl39z.api.raw-labs.com/inventory"
         );
         const data = await response.json();
-        const updatedList = data.map((item: Inventory_State, index: number) => {
-          return {
-            ...item,
-            id: `${item.name}-${item.category}-${index}`,
-            isDeleted: false,
-            isActive: true
-          };
-        });
+        const updatedList = data.map(
+          (item: InventoryStateInterface, index: number) => {
+            return {
+              ...item,
+              quantity: +item.quantity,
+              price: item.value.replace("$", ""),
+              value: item.value.replace("$", ""),
+              id: `${item.name}-${item.category}-${index}`,
+              isDeleted: false,
+              isActive: true
+            };
+          }
+        );
         updateInventory(updatedList);
       } catch (error: unknown) {
         if (error instanceof Error) {

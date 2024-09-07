@@ -1,7 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
-
+import { ChangeEvent, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Card,
@@ -15,7 +14,7 @@ import { closeButtonStyle, modalCardStyle } from "@/constants";
 import { modalState, modalStateDefaultValue } from "@/store/atom";
 import { useRecoilState } from "recoil";
 import useInverntoryUpdate from "@/hook/useInverntoryUpdate";
-import { Updated_Inventory_State } from "@/types";
+import { UpdatedInventoryStateInterface } from "@/types";
 
 const CustomModal = ({
   open,
@@ -25,16 +24,32 @@ const CustomModal = ({
   handleClose: () => void;
 }) => {
   const [data, updateModalState] = useRecoilState(modalState);
-  const [value, setValue] = useState<Updated_Inventory_State>(data);
+  const [value, setValue] = useState<UpdatedInventoryStateInterface>(data);
   const updateInventory = useInverntoryUpdate();
 
   useEffect(() => {
     setValue(data);
   }, [data.id]);
 
+  useEffect(() => {
+    setValue((prev) => {
+      return {
+        ...prev,
+        value: `${+prev.price * prev.quantity || 0}`
+      };
+    });
+  }, [value.quantity, value.price]);
+
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setValue((prev) => ({
+      ...prev,
+      [e.target.name]:
+        e.target.name === "quantity" || e.target.name === "price"
+          ? +e.target.value
+          : e.target.value
+    }));
   };
+
   const handleOnSubmit = () =>
     updateInventory(value, () => {
       updateModalState(value);
@@ -43,6 +58,7 @@ const CustomModal = ({
     });
 
   const changesMade = JSON.stringify(value) === JSON.stringify(data);
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Card sx={modalCardStyle} className="space-y-6">
@@ -61,28 +77,25 @@ const CustomModal = ({
             label="Category"
             name="category"
             value={value.category}
-            defaultValue={data.category}
           />
           <TextField
             onChange={handleOnChange}
             name="price"
-            value={value.price}
             label="price"
-            defaultValue={data.price}
+            value={value.price}
           />
           <TextField
             onChange={handleOnChange}
             name="quantity"
-            value={value.quantity}
             label="quantity"
-            defaultValue={data.quantity}
+            value={value.quantity}
           />
           <TextField
-            onChange={handleOnChange}
-            name="value"
-            value={value.value}
+            disabled
             label="value"
-            defaultValue={data.value}
+            name="value"
+            onChange={handleOnChange}
+            value={value.value}
           />
         </div>
         <div className="flex justify-end gap-2">
