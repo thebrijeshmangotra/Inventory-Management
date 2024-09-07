@@ -1,6 +1,6 @@
 import {
-  Alert,
   Button,
+  CircularProgress,
   IconButton,
   Table,
   TableBody,
@@ -66,10 +66,12 @@ const CustomTableContainer = () => {
             {inventory.length ? (
               <TableRowMap handleModalTrigger={handleModalTrigger} />
             ) : (
-              <TableRow className="relative">
-                <div className="fixed bottom-10 right-10 z-50">
-                  <Alert severity="error">Something went wrong</Alert>
-                </div>
+              <TableRow>
+                <TableCell colSpan={6}>
+                  <div className="flex justify-center">
+                    <CircularProgress />
+                  </div>
+                </TableCell>
               </TableRow>
             )}
           </TableBody>
