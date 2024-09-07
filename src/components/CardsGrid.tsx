@@ -11,28 +11,24 @@ const CardsGrid = () => {
   const [inventory] = useRecoilState(inventoryState);
 
   const overallDetails = useMemo(() => {
-    const totalProducts = inventory.filter((item) => !item.isDeleted).length;
-    const outofStock = inventory.filter((item) => !item.quantity).length;
-    const totalValue = inventory
+    const totalProducts = inventory.filter((item) => !item.isDeleted);
+    const outofStock = totalProducts.filter((item) => !item.quantity).length;
+    const totalValue = totalProducts
       .map((item) => +item.value.replace("$", ""))
       .reduce((acc, curr) => acc + curr, 0);
 
-    const filteredCategory = inventory.map((item) => item.category);
+    const filteredCategory = totalProducts.map((item) => item.category);
     const totalCategory = filteredCategory.filter(
       (item, index) => filteredCategory.indexOf(item) === index
     ).length;
 
-    console.log("filteredCategory", totalCategory);
-
     return {
-      totalProducts,
+      totalProducts: totalProducts.length,
       outofStock,
       totalValue,
       totalCategory
     };
   }, [inventory]);
-
-  console.log("overallDetails", overallDetails);
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">

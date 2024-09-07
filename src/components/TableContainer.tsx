@@ -110,11 +110,8 @@ const TableRowMap = ({
     <>
       {inventory
         .filter((item) => !item.isDeleted)
-        .map((item, index) => (
-          <TableRow
-            key={`${item}-${index}-key`}
-            sx={!item.isActive ? disbaledRowCss : {}}
-          >
+        .map((item) => (
+          <TableRow key={item.id} sx={!item.isActive ? disbaledRowCss : {}}>
             <TableCell component="th">{item.name}</TableCell>
             <TableCell component="th" align="center">
               {item.category}
