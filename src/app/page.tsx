@@ -1,11 +1,11 @@
 "use client";
 
-import { Alert, Snackbar, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Typography } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import CardsGrid from "@/components/CardsGrid";
 import Topbar from "@/components/Topbar";
 import CustomTableContainer from "@/components/TableContainer";
-import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { inventoryState } from "@/store/atom";
 import { Inventory_State } from "@/types";

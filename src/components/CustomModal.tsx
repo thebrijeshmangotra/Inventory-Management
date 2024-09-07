@@ -33,7 +33,7 @@ const CustomModal = ({
   }, [data.id]);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue({ ...data, [e.target.name]: e.target.value });
+    setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleOnSubmit = () =>
     updateInventory(value, () => {
